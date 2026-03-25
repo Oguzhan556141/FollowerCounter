@@ -34,8 +34,19 @@ function animateValue(obj, start, end, duration) {
 // Initial fetch
 fetchFollowers();
 
-// Update every 30 seconds
-setInterval(fetchFollowers, 30000);
+let countdown = 30;
+const countdownElement = document.getElementById('update-countdown');
+
+setInterval(() => {
+    countdown--;
+    if (countdown <= 0) {
+        countdown = 30;
+        fetchFollowers();
+    }
+    if (countdownElement) {
+        countdownElement.innerText = countdown;
+    }
+}, 1000);
 
 // Add some interaction to the stars
 document.addEventListener('mousemove', (e) => {

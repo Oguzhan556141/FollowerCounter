@@ -15,36 +15,19 @@ cache = {
 }
 
 def get_instagram_followers(username):
-    url = f"https://www.instagram.com/{username}/"
+    url = f"https://i.instagram.com/api/v1/users/web_profile_info/?username={username}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive"
+        "x-ig-app-id": "936619743392459",
     }
     
     try:
         response = requests.get(url, headers=headers, timeout=10)
         if response.status_code == 200:
-            # Pattern 0: Meta description (most reliable for public profiles)
-            # Example: <meta name="description" content="816 Followers, ...">
-            match = re.search(r'content="(\d+[.,\d]*)\s*Followers', response.text, re.IGNORECASE)
-            if match:
-                num_str = match.group(1).replace(',', '').replace('.', '')
-                return int(num_str)
-
-            # Pattern 1: JSON in source
-            match = re.search(r'"edge_followed_by":\{"count":(\d+)\}', response.text)
-            if match:
-                return int(match.group(1))
-            
-            # Pattern 2: Fallback for different description format
-            match = re.search(r'(\d+[.,\d]*)\s*Followers', response.text, re.IGNORECASE)
-            if match:
-                num_str = match.group(1).replace(',', '').replace('.', '')
-                return int(num_str)
-                
+            data = response.json()
+            return int(data['data']['user']['edge_followed_by']['count'])
+        else:
+            print(f"Instagram request failed. Status code: {response.status_code}")
         return None
     except Exception as e:
         print(f"Error fetching Instagram data: {e}")
@@ -84,5 +67,5 @@ if __name__ == '__main__':
         cache['count'] = initial_count
         cache['last_updated'] = int(time.time())
     
-    print("Starting Gulf Tech Follower Counter Server on http://localhost:5001")
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    print("Starting Gulf Tech Follower Counter Server on http://localhost:5003")
+    app.run(host='0.0.0.0', port=5003, debug=True)

@@ -89,7 +89,7 @@ body {
 }
 
 .brand-logo {
-    width: 80px;
+    width: 140px;
     margin-bottom: 10px;
     filter: drop-shadow(0 0 10px var(--accent-blue));
 }
@@ -151,6 +151,43 @@ h1 {
     0% { transform: scale(0.95); opacity: 0.7; }
     50% { transform: scale(1.2); opacity: 1; }
     100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+.countdown-info {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-container {
+    margin-top: 35px;
+}
+
+.qr-code {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    border: 3px solid var(--accent-blue);
+    padding: 8px;
+    background: white;
+    box-shadow: 0 0 15px rgba(0, 163, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.qr-code:hover {
+    transform: scale(1.05);
+}
+
+.qr-text {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    color: var(--accent-yellow);
+    letter-spacing: 1px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
 }
 
 /* Orion Constellation */
