@@ -1,0 +1,201 @@
+:root {
+    --primary-bg: #050816;
+    --accent-yellow: #FFD700;
+    --accent-blue: #00A3FF;
+    --text-color: #FFFFFF;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    font-family: 'Rajdhani', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background Animation */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.stars {
+    background: radial-gradient(white, rgba(255,255,255,0) 2px);
+    background-size: 50px 50px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+}
+
+.grid {
+    background-image: 
+        linear-gradient(to right, rgba(0, 163, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 163, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    width: 100%;
+    height: 100%;
+    transform: perspective(500px) rotateX(60deg);
+    transform-origin: top;
+    position: absolute;
+    bottom: 0;
+}
+
+/* Container & Card */
+.container {
+    width: 90%;
+    max-width: 500px;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 163, 255, 0.1) 0%, transparent 70%);
+}
+
+/* Header */
+.logo-container {
+    margin-bottom: 30px;
+}
+
+.brand-logo {
+    width: 80px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px var(--accent-blue));
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: var(--accent-yellow);
+}
+
+/* Counter */
+.counter-section {
+    margin: 40px 0;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.counter-display {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.username {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: var(--accent-blue);
+    font-weight: 500;
+}
+
+/* Footer Info */
+.update-info {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.pulse {
+    width: 8px;
+    height: 8px;
+    background-color: #00FF00;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00FF00;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+/* Orion Constellation */
+.orion-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.orion-container:hover {
+    opacity: 1;
+}
+
+.orion-svg {
+    width: 50px;
+    height: 60px;
+}
+
+.star {
+    fill: #fff;
+    filter: drop-shadow(0 0 2px #fff);
+}
+
+.betelgeuse { fill: #FF4500; }
+.rigel { fill: #00A3FF; }
+
+.constellation-line {
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 0.5;
+}
+
+.orion-label {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .counter-display { font-size: 3rem; }
+    .glass-card { padding: 30px; }
+}

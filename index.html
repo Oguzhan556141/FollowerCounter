@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gulf Tech - Instagram Takipçi Sayacı</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="stars"></div>
+        <div class="grid"></div>
+    </div>
+
+    <main class="container">
+        <div class="glass-card">
+            <header>
+                <div class="logo-container">
+                    <img src="https://gulftechrobotic.com.tr/kopek-removebg-preview.png" alt="Gulf Tech Logo" class="brand-logo">
+                    <h1>GULF TECH #11392</h1>
+                </div>
+            </header>
+
+            <section class="counter-section">
+                <p class="subtitle">LIVE INSTAGRAM FOLLOWERS</p>
+                <div class="counter-display" id="follower-counter">
+                    <span class="count">0</span>
+                </div>
+                <div class="username">@gulftechtr</div>
+            </section>
+
+            <footer>
+                <div class="update-info">
+                    <span class="pulse"></span>
+                    Son Güncelleme: <span id="last-update">Şimdi</span>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Orion Constellation -->
+    <div class="orion-container">
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" class="orion-svg">
+            <circle cx="50" cy="10" r="2" class="star betelgeuse" />
+            <circle cx="55" cy="50" r="1.5" class="star alnitak" />
+            <circle cx="50" cy="55" r="1.5" class="star alnilam" />
+            <circle cx="45" cy="60" r="1.5" class="star mintaka" />
+            <circle cx="20" cy="20" r="1.5" class="star bellatrix" />
+            <circle cx="80" cy="110" r="2" class="star rigel" />
+            <circle cx="15" cy="105" r="1.5" class="star saiph" />
+            
+            <!-- Lines -->
+            <line x1="50" y1="10" x2="55" y2="50" class="constellation-line" />
+            <line x1="55" y1="50" x2="50" y2="55" class="constellation-line" />
+            <line x1="50" y1="55" x2="45" y2="60" class="constellation-line" />
+            <line x1="20" y1="20" x2="45" y2="60" class="constellation-line" />
+            <line x1="45" y1="60" x2="15" y2="105" class="constellation-line" />
+            <line x1="55" y1="50" x2="80" y2="110" class="constellation-line" />
+        </svg>
+        <span class="orion-label">ORION</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
