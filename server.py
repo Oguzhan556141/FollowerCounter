@@ -8,18 +8,26 @@ import os
 app = Flask(__name__, static_folder='.')
 CORS(app)
 
+# --- CONFIGURATION ---
+# To avoid 401/429 errors, paste your Instagram 'sessionid' cookie value here:
+SESSIONID = '49647639774%3AH966aEpJiF3K48%3A7%3AAYjfwGpXu8Y7kZq9AxCTNcCV2vyag7eiCsoI4pUcjBU' 
+# ---------------------
+
 # Cache for follower count
 cache = {
-    'count': 816, # Last known verified count as fallback
+    'count': 854, # Last known verified count as fallback
     'last_updated': int(time.time())
 }
 
 def get_instagram_followers(username):
     url = f"https://i.instagram.com/api/v1/users/web_profile_info/?username={username}"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
         "x-ig-app-id": "936619743392459",
     }
+    
+    if SESSIONID:
+        headers["Cookie"] = f"sessionid={SESSIONID}"
     
     try:
         response = requests.get(url, headers=headers, timeout=10)
@@ -67,5 +75,5 @@ if __name__ == '__main__':
         cache['count'] = initial_count
         cache['last_updated'] = int(time.time())
     
-    print("Starting Gulf Tech Follower Counter Server on http://localhost:5003")
-    app.run(host='0.0.0.0', port=5003, debug=True)
+    print("Starting Gulf Tech Follower Counter Server on http://localhost:5555")
+    app.run(host='0.0.0.0', port=5555, debug=True)
