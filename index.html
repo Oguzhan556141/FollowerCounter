@@ -13,10 +13,22 @@
     <div class="background-animation">
         <div class="stars"></div>
         <div class="grid"></div>
+        <audio id="celebration-sound" src="https://assets.mixkit.co/active_storage/sfx/2012/2012-preview.mp3" preload="auto"></audio>
+        <audio id="follower-chime" src="https://assets.mixkit.co/active_storage/sfx/2014/2014-preview.mp3" preload="auto"></audio>
     </div>
 
     <main class="container">
         <div class="glass-card">
+            <!-- Vertical Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progress-percent">0</span>%
+                </div>
+            </div>
+            
             <header>
                 <div class="logo-container">
                     <img src="https://gulftechrobotic.com.tr/kopek-removebg-preview.png" alt="Gulf Tech Logo" class="brand-logo">
@@ -40,9 +52,10 @@
                 <div class="update-info">
                     <span class="pulse"></span>
                     Son Güncelleme: <span id="last-update">Şimdi</span>
-                </div>
-                <div class="countdown-info">
-                    Gelecek Güncelleme: <span id="update-countdown">30</span> sn
+                    <span style="margin: 0 10px; opacity: 0.3;">|</span>
+                    Kalan: <span id="update-countdown">30</span>s
+                    <span style="margin: 0 10px; opacity: 0.3;">|</span>
+                    <span id="sound-status" style="cursor: pointer; color: var(--accent-yellow); font-size: 0.8rem;" title="Sesi Test Et">🔊 Sesleri Aktif Et</span>
                 </div>
             </footer>
         </div>
@@ -70,6 +83,8 @@
         <span class="orion-label">ORION</span>
     </div>
 
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

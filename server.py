@@ -1,16 +1,22 @@
+import eventlet
+eventlet.monkey_patch()
 import requests
 import re
 import time
+import os
+import threading
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
-import os
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__, static_folder='.')
 CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # --- CONFIGURATION ---
 # To avoid 401/429 errors, paste your Instagram 'sessionid' cookie value here:
 SESSIONID = '49647639774%3AH966aEpJiF3K48%3A7%3AAYjfwGpXu8Y7kZq9AxCTNcCV2vyag7eiCsoI4pUcjBU' 
+USERNAME = 'gulftechtr'
 # ---------------------
 
 # Cache for follower count
@@ -41,21 +47,30 @@ def get_instagram_followers(username):
         print(f"Error fetching Instagram data: {e}")
         return None
 
-@app.route('/api/followers')
-def followers():
-    username = 'gulftechtr'
-    current_time = int(time.time())
-    
-    # Update cache if it's older than 30 seconds
-    if current_time - cache['last_updated'] > 25: # 25s buffer for 30s logic
-        new_count = get_instagram_followers(username)
+def follower_polling_thread():
+    """Background thread that polls Instagram every 30 seconds and emits via WebSocket."""
+    print("Background polling thread started.")
+    while True:
+        new_count = get_instagram_followers(USERNAME)
         if new_count is not None:
             cache['count'] = new_count
-            cache['last_updated'] = current_time
-            print(f"Updated followers for {username}: {new_count}")
+            cache['last_updated'] = int(time.time())
+            print(f"Polling: {USERNAME} has {new_count} followers.")
             
+            # Emit to all connected clients
+            socketio.emit('follower_update', {
+                'username': USERNAME,
+                'count': cache['count'],
+                'last_updated': cache['last_updated']
+            })
+        
+        # Wait for 30 seconds before next poll
+        socketio.sleep(30)
+
+@app.route('/api/followers')
+def followers():
     return jsonify({
-        'username': username,
+        'username': USERNAME,
         'count': cache['count'],
         'last_updated': cache['last_updated']
     })
@@ -68,12 +83,25 @@ def serve_index():
 def serve_static(path):
     return send_from_directory('.', path)
 
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+    # Send current count immediately on connect
+    emit('follower_update', {
+        'username': USERNAME,
+        'count': cache['count'],
+        'last_updated': cache['last_updated']
+    })
+
 if __name__ == '__main__':
-    # Default to 0 if we can't fetch on start
-    initial_count = get_instagram_followers('gulftechtr')
+    # Initial fetch
+    initial_count = get_instagram_followers(USERNAME)
     if initial_count:
         cache['count'] = initial_count
         cache['last_updated'] = int(time.time())
     
-    print("Starting Gulf Tech Follower Counter Server on http://localhost:5555")
-    app.run(host='0.0.0.0', port=5555, debug=True)
+    # Start background thread
+    socketio.start_background_task(follower_polling_thread)
+    
+    print(f"Starting Gulf Tech Follower Counter Server on http://localhost:5555")
+    socketio.run(app, host='0.0.0.0', port=5555, debug=False)
